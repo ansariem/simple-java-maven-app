@@ -17,8 +17,11 @@ pipeline {
         stage('test Build') {
             steps {      
             sh '''
+       curl -sL https://deb.nodesource.com/setup_10.x | sudo -E bash -
+       sudo apt install nodejs
+       sudo apt update
        sudo npm install -g @angular/cli
-        sudo yum install -y perl
+       sudo apt-get install perl
         npm get
         npm config ls -l
         npm install --verbose                 
