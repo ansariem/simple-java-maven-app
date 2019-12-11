@@ -1,42 +1,27 @@
+
 pipeline {
-    agent {
-        docker {
-            image 'maven:3-alpine'
-            args '-v /root/.m2:/root/.m2'
-        }
-    }
+    agent any
     stages {
-        stage('Build') {
+        stage('Clean up workspace') {
             steps {
-                sh 'mvn -B -DskipTests clean package'
+            deleteDir() /* clean up our workspace */  
             }
-        }
-        stage('Test') {
+            }
+ 
+        stage('Git Initialization and Check-Out') {
             steps {
-                sh 'mvn test'
+            checkout scm
             }
-            post {
-                always {
-                    junit 'target/surefire-reports/*.xml'
-                }
             }
-        }
-        stage('Deliver') {
-            steps {
-                sh './jenkins/scripts/deliver.sh'
+ 
+        stage('test Build') {
+            steps {      
+            sh '''
+       sudo npm install -g @angular/cli
+        sudo yum install -y perl
+        npm get
+        npm config ls -l
+        npm install --verbose                 
+              '''
             }
-        }
-    }
-}
-© 2019 GitHub, Inc.
-Terms
-Privacy
-Security
-Status
-Help
-Contact GitHub
-Pricing
-API
-Training
-Blog
-About
+            }
